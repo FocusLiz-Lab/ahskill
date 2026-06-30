@@ -8,6 +8,7 @@ X合并/
 # Build outputs
 dist/
 claude-dist/
+skillhub-package/
 *.zip
 
 # Local metadata
