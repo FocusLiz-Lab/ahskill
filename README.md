@@ -1,8 +1,8 @@
 # ahskill
 
-Alex Hormozi 风格商业工作流 Skill 工具箱。
+Alex Hormozi 商业工作流 Skill 工具箱。
 
-`ahskill` 是一组面向 Agent 的 workflow skills，用来基于 IMA 知识库学习 Alex Hormozi 风格资料、设计 offer、搭建获客系统、提升销售转化、设计定价、拆解规模化运营，并生成内容资产。
+`ahskill` 是一组面向 Agent 的 workflow skills，用来基于 IMA 知识库学习 Alex Hormozi 资料、设计 offer、搭建获客系统、提升销售转化、设计定价、拆解规模化运营，并生成内容资产。
 
 适用于 Codex、Claude Code、Cursor、Trae Solo 等支持 skill / system prompt 工作流的 Agent。
 
@@ -169,7 +169,7 @@ $ah-content 围绕这个 offer 做 30 个短内容选题。
 
 本仓库不包含 Alex Hormozi 的原书、PDF、付费材料、YouTube 转录稿、X/Twitter 归档、私有资料文件夹或任何受版权保护的原始资料库。
 
-这些 skills 会在运行时从用户自己的 IMA 知识库检索资料。用户需要自行确保有权上传和使用自己的资料。
+这些 skills 会在运行时从用户自己的 IMA 知识库检索资料。用户需要自行确保有权访问知识库。
 
 请不要提交：
 
