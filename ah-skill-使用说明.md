@@ -1,6 +1,6 @@
 # Alex Hormozi Skill 使用说明
 
-这是一组基于 IMA 知识库的 Alex Hormozi workflow skills。它的结构参考 dkskill：主入口负责路由，子 skill 负责具体任务，所有 workflow 默认读取同一个 IMA 知识库。
+这是一组基于 IMA 知识库的 Alex Hormozi workflow skills。ahskill 主入口负责路由，子 skill 负责具体任务，所有 workflow 默认读取同一个 IMA 知识库。
 
 ## 默认 IMA 知识库
 
@@ -140,7 +140,7 @@ ah-ima/
 
 1. 安装这些 skills。
 2. 安装并配置 `ima-skill`。
-3. 在 IMA 中准备 `AlexHormozi 知识库 | 百万美元报价`。
+3. 已加入ima知识库  `AlexHormozi 知识库 | 百万美元报价`。
 4. 使用 `$ah` 或任一子 skill 开始提问。
 
 ## 设计原则
