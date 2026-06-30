@@ -1,4 +1,4 @@
-# Alex Hormozi Skill 使用说明
+# 使用说明
 
 这是一组基于 IMA 知识库的 Alex Hormozi workflow skills。ahskill 主入口负责路由，子 skill 负责具体任务，所有 workflow 默认读取同一个 IMA 知识库。
 
