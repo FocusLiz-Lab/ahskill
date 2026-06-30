@@ -62,8 +62,6 @@ Scan the QR code below to access or identify the knowledge-base entry point:
 
 ![Knowledge Base QR Code](docs/knowledge-base-qrcode.png)
 
-> Replace `docs/knowledge-base-qrcode.png` with the official IMA share QR code before public release if a different QR code is required.
-
 ### Install IMA Skill
 
 ```text
