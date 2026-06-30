@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Roadmap"
+  short_description: "Business roadmap with Hormozi frameworks"
+  default_prompt: "Use $ah-roadmap to turn a business goal into a Hormozi-style execution path."

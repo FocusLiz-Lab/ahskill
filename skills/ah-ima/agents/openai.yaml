@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi IMA"
+  short_description: "IMA retrieval for Hormozi materials"
+  default_prompt: "Use $ah-ima to search IMA for Hormozi source evidence before answering."

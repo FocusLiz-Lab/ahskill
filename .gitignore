@@ -1,0 +1,20 @@
+# Private source material
+.work/
+books/
+youtube/
+X/
+X合并/
+
+# Build outputs
+dist/
+claude-dist/
+*.zip
+
+# Local metadata
+SOURCE_MAP.local.md
+.env
+*.log
+
+# System files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Scale"
+  short_description: "Scaling operations and retention"
+  default_prompt: "Use $ah-scale to diagnose scaling, systems, retention, and LTV."

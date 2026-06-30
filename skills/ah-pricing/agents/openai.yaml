@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Pricing"
+  short_description: "Pricing, profit, and money models"
+  default_prompt: "Use $ah-pricing to improve pricing, margin, and monetization."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Learning Map"
+  short_description: "Hormozi IMA learning paths"
+  default_prompt: "Use $ah-learning-map to build a source-grounded Hormozi learning path."

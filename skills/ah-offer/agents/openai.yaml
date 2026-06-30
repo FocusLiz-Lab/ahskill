@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Offer"
+  short_description: "Offer design from Hormozi materials"
+  default_prompt: "Use $ah-offer to design a stronger offer with IMA-grounded Hormozi frameworks."

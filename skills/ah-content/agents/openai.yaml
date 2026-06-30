@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Content"
+  short_description: "Content ideas and hooks from Hormozi"
+  default_prompt: "Use $ah-content to create Hormozi-grounded content angles and scripts."

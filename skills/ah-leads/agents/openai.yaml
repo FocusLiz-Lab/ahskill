@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Leads"
+  short_description: "Lead generation and acquisition"
+  default_prompt: "Use $ah-leads to diagnose and design lead generation."

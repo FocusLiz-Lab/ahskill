@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi"
+  short_description: "Hormozi IMA router and workflows"
+  default_prompt: "Use $ah to route this business question to IMA-grounded Hormozi workflows."

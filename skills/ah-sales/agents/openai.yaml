@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi Sales"
+  short_description: "Sales and objection handling"
+  default_prompt: "Use $ah-sales to improve closing, qualification, and objection handling."
