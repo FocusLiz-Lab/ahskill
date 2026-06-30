@@ -19,7 +19,7 @@
 | 项目名 | `ahskill` | GitHub 仓库名、发布名 |
 | 主入口 skill | `ah` | 用户最常调用的短命令 |
 | 博主名 | `Alex Hormozi` | README 和 skill 描述使用 |
-| 中文定位 | `商业增长 / offer / 获客` | 一句话说明这个 skill 解决什么 |
+| 中文定位 | `写作 / 投资 / 设计 / 商业增长` | 一句话说明这个 skill 解决什么 |
 | 默认 IMA 知识库 | `AlexHormozi 知识库 | 百万美元报价` | workflow 默认检索的知识库名称 |
 | GitHub 仓库 | `<owner>/<repo>` | 例如 `FocusLiz-Lab/ahskill` |
 | 二维码文件 | `docs/knowledge-base-qrcode.png` | 用于 README 展示知识库入口 |
@@ -28,30 +28,47 @@
 
 ---
 
-## 2. 标准技能矩阵
+## 2. 定制技能矩阵
 
-优先保持每个博主项目都有一套稳定入口，方便批量生产和用户理解。
+不要假设每个博主都适合完整商业链路。先看这个博主的内容资产、用户场景和知识库结构，再定制 skill 入口。
+
+建议把 skill 分成两类：
+
+- 必备入口：用于统一触发、路由、IMA 检索。
+- 可选模块：按博主领域选择，不需要每个项目都生成。
+
+### 必备入口
 
 | Skill 类型 | 命名模板 | 用途 |
 |---|---|---|
 | 主入口 | `<prefix>` | 自动识别问题并路由到具体 workflow |
-| 学习地图 | `<prefix>-learning-map` | 先学什么、阅读顺序、学习产出 |
-| 路线图 | `<prefix>-roadmap` | 30/60/90 天行动路径 |
-| Offer | `<prefix>-offer` | 产品、服务、课程、咨询、社群的 offer 设计 |
-| 获客 | `<prefix>-leads` | 流量、线索、lead magnet、渠道策略 |
-| 销售 | `<prefix>-sales` | 私聊、电话、异议处理、跟进转化 |
-| 定价 | `<prefix>-pricing` | 定价、利润、套餐、价格测试 |
-| 规模化 | `<prefix>-scale` | 交付、系统、留存、LTV、团队 |
-| 内容 | `<prefix>-content` | 选题、hook、短视频、长文、发布计划 |
 | IMA 桥接 | `<prefix>-ima` | 显式搜索、引用、排错 IMA 检索 |
 
-如果某个博主不适合完整商业链路，可以删减，但建议至少保留：
+### 常见可选模块
 
-- `<prefix>`
-- `<prefix>-learning-map`
-- `<prefix>-content`
-- `<prefix>-offer`
-- `<prefix>-ima`
+| 模块类型 | 命名模板 | 适合的博主类型 |
+|---|---|---|
+| 学习地图 | `<prefix>-learning-map` | 知识库很大、课程体系复杂、需要学习顺序 |
+| 内容创作 | `<prefix>-content` | 自媒体、写作、短视频、播客、Newsletter |
+| 写作系统 | `<prefix>-writing` | 长文、公众号、Newsletter、脚本写作 |
+| 案例拆解 | `<prefix>-case-study` | 商业案例、设计案例、投资案例、增长案例 |
+| 作品评审 | `<prefix>-review` | 设计、文案、账号、产品、作品集评审 |
+| 研究分析 | `<prefix>-research` | 投资、行业研究、趋势分析、资料整理 |
+| 行动计划 | `<prefix>-roadmap` | 需要把知识转成 7/30/90 天行动计划 |
+| 工具流程 | `<prefix>-workflow` | AI workflow、自动化、工具链、模板化执行 |
+| 商业 Offer | `<prefix>-offer` | 商业、营销、咨询、课程、服务产品化 |
+| 获客销售 | `<prefix>-leads` / `<prefix>-sales` | 明确讲流量、转化、成交、私域运营 |
+| 训练练习 | `<prefix>-practice` | 语言学习、表达训练、编程训练、技能训练 |
+| 问答导师 | `<prefix>-coach` | 适合做陪跑、复盘、决策建议、学习辅导 |
+
+### 选型规则
+
+- 如果博主主要讲“学习/认知/方法论”，优先做 `learning-map`、`practice`、`coach`。
+- 如果博主主要讲“内容/表达/个人品牌”，优先做 `content`、`writing`、`review`。
+- 如果博主主要讲“投资/行业/趋势”，优先做 `research`、`case-study`、`coach`。
+- 如果博主主要讲“设计/产品/作品”，优先做 `review`、`case-study`、`workflow`。
+- 如果博主主要讲“商业/营销/增长”，再考虑 `offer`、`leads`、`sales`、`pricing`、`scale`。
+- 如果知识库规模很小，只做 `<prefix>` 和 `<prefix>-ima` 也可以。
 
 ---
 
@@ -73,10 +90,10 @@ GitHub 仓库建议结构：
     │   │   └── openai.yaml
     │   └── references/
     │       └── archive-map.md
-    ├── <prefix>-learning-map/
+    ├── <prefix>-module-a/
     │   ├── SKILL.md
     │   └── agents/openai.yaml
-    ├── <prefix>-offer/
+    ├── <prefix>-module-b/
     │   ├── SKILL.md
     │   └── agents/openai.yaml
     └── <prefix>-ima/
@@ -131,15 +148,15 @@ description: |
 - 质量标准
 - 禁止事项
 
-主入口 `<prefix>` 必须包含路由表：
+主入口 `<prefix>` 必须包含路由表。下面只是模板，实际行数和模块名称要按博主领域替换：
 
 ```markdown
 | 用户意图 | 路由到 | 使用场景 |
 |---|---|---|
 | 学习路径 | `$<prefix>-learning-map` | 用户问先学什么、怎么系统学习 |
-| Offer | `$<prefix>-offer` | 用户要设计产品、服务、课程、咨询 |
-| 获客 | `$<prefix>-leads` | 用户流量差、线索少、渠道弱 |
-| 内容 | `$<prefix>-content` | 用户要选题、脚本、长文、短内容 |
+| 内容创作 | `$<prefix>-content` | 用户要选题、脚本、长文、短内容 |
+| 作品评审 | `$<prefix>-review` | 用户要点评作品、账号、文案、方案 |
+| 研究分析 | `$<prefix>-research` | 用户要整理资料、分析趋势、拆解案例 |
 | IMA 检索 | `$<prefix>-ima` | 用户明确要找资料、引用、排错 |
 ```
 
@@ -239,8 +256,8 @@ README 必须包含：
 
 ```text
 $<prefix>-learning-map 系统学习这个知识库，先看哪些？
-$<prefix>-offer 用户要做一个低价知识库产品，帮他设计更强的 offer。
-$<prefix>-content 围绕这个 offer 做 30 个短内容选题。
+$<prefix>-content 围绕这个主题做 30 个短内容选题。
+$<prefix>-review 帮用户点评一份作品或方案，并给修改建议。
 ```
 
 示例中不要出现隐私字段、具体账号、私有业务、未授权平台数据。
@@ -365,7 +382,7 @@ skills/
 旧 GitHub 仓库 -> 新 GitHub 仓库
 ```
 
-5. 根据博主领域调整技能矩阵。
+5. 根据博主领域选择模块，不要默认生成完整商业链路。
 6. 修改每个 `SKILL.md` 的 description、workflow 和输出格式。
 7. 替换二维码图片。
 8. 更新 README 和 `使用说明.md`。
@@ -387,11 +404,11 @@ $<prefix>-learning-map 系统学习这个知识库，先看哪些？
 ```
 
 ```text
-$<prefix>-offer 用户要做一个知识产品，帮他设计一个更强的 offer。
+$<prefix>-content 围绕知识库里的核心主题，生成 10 个内容选题。
 ```
 
 ```text
-$<prefix> 用户不知道问题出在产品、获客还是销售，帮他诊断一下。
+$<prefix> 用户想把这个知识库用于实际项目，帮他判断应该从哪个模块开始。
 ```
 
 输出要满足：
