@@ -24,7 +24,7 @@ def fetch_json(url: str):
 
 def download(url: str, target: Path) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
-    with urllib.request.urlopen(url, timeout=120) as response:
+    with urllib.request.urlopen(url, timeout=300) as response:
         target.write_bytes(response.read())
 
 
