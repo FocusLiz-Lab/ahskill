@@ -1,6 +1,6 @@
 ---
 name: ah-download-atoms
-description: 下载或更新 Alex Hormozi / ahskill 的全量本地原子库。用于用户安装 SkillHub 轻量包后，需要从 GitHub 拉取完整 `知识库/原子库/atoms.jsonl` 和按年份/季度拆分的 `atoms_*.jsonl` 文件。
+description: 下载或更新 Alex Hormozi / ahskill 的全量本地原子库和商业案例原子库。用于用户安装 SkillHub 轻量包后，需要从 GitHub 拉取完整 `知识库/原子库/atoms.jsonl`、按年份/季度拆分的 `atoms_*.jsonl`，以及 `知识库/商业案例库/atoms.jsonl`。
 ---
 
 # ah-download-atoms 全量原子库下载
@@ -15,6 +15,7 @@ python tools/download_full_atoms.py
 
 ```text
 知识库/原子库/atoms.jsonl
+知识库/商业案例库/atoms.jsonl
 ```
 
 以及同目录下的 `atoms_*.jsonl` 文件。

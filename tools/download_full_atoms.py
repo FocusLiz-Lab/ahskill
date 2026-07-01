@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download the full atom library for this skill from GitHub."""
+"""Download the full atom libraries for this skill from GitHub."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ import urllib.request
 from pathlib import Path
 
 REPO = "FocusLiz-Lab/ahskill"
-ATOM_DIR = "知识库/原子库"
+DOWNLOAD_DIRS = ("知识库/原子库", "知识库/商业案例库")
 
 
 def package_root() -> Path:
@@ -28,23 +28,34 @@ def download(url: str, target: Path) -> None:
         target.write_bytes(response.read())
 
 
-def main() -> int:
-    encoded_dir = urllib.parse.quote(ATOM_DIR)
+def download_dir(remote_dir: str) -> int:
+    encoded_dir = urllib.parse.quote(remote_dir)
     api_url = f"https://api.github.com/repos/{REPO}/contents/{encoded_dir}?ref=main"
     files = [item for item in fetch_json(api_url) if item.get("type") == "file"]
     if not files:
-        print("未在 GitHub 仓库中找到原子库文件。", file=sys.stderr)
-        return 1
+        print(f"未在 GitHub 仓库中找到 {remote_dir} 文件。", file=sys.stderr)
+        return 0
 
-    target_dir = package_root() / ATOM_DIR
+    target_dir = package_root() / remote_dir
+    count = 0
     for item in files:
         name = item["name"]
-        if not (name.endswith(".jsonl") or name == "README.md"):
+        if not (name.endswith(".jsonl") or name.endswith(".json") or name.endswith(".md")):
             continue
-        print(f"下载 {name} ...")
+        print(f"下载 {remote_dir}/{name} ...")
         download(item["download_url"], target_dir / name)
+        count += 1
+    return count
 
-    print(f"完成：{target_dir}")
+
+def main() -> int:
+    count = 0
+    for remote_dir in DOWNLOAD_DIRS:
+        count += download_dir(remote_dir)
+    if count == 0:
+        print("未下载到任何原子库文件。", file=sys.stderr)
+        return 1
+    print(f"完成：已下载 {count} 个文件到 {package_root() / '知识库'}")
     return 0
 
 
