@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download the full atom library for this skill from GitHub."""
+"""Download the full expert atom library for this skill from GitHub."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import urllib.request
 from pathlib import Path
 
 REPO = "FocusLiz-Lab/ahskill"
-ATOM_DIRS = ["知识库/原子库", "知识库/商业案例库"]
+ATOM_DIRS = ["知识库/原子库"]
 
 
 def get_gh_token() -> str | None:
@@ -24,7 +24,9 @@ def get_gh_token() -> str | None:
     try:
         result = subprocess.run(
             ["gh", "auth", "token"],
-            capture_output=True, text=True, timeout=10,
+            capture_output=True,
+            text=True,
+            timeout=10,
         )
         if result.returncode == 0:
             return result.stdout.strip()
@@ -45,7 +47,7 @@ def make_request(url: str, timeout: int = 120) -> bytes:
 
 
 def fetch_json(url: str) -> list[dict]:
-    """Fetch JSON from GitHub API (auth required for rate limits)."""
+    """Fetch JSON from GitHub API, using auth for higher rate limits."""
     req = urllib.request.Request(url)
     token = get_gh_token()
     if token:
@@ -66,8 +68,8 @@ def download_dir(atom_dir: str) -> tuple[int, int]:
 
     try:
         items = fetch_json(api_url)
-    except Exception as e:
-        print(f"  获取文件列表失败 ({atom_dir}): {e}", file=sys.stderr)
+    except Exception as exc:
+        print(f"  获取文件列表失败 ({atom_dir}): {exc}", file=sys.stderr)
         return 0, 0
 
     files = [item for item in items if item.get("type") == "file"]
@@ -84,16 +86,13 @@ def download_dir(atom_dir: str) -> tuple[int, int]:
             continue
         print(f"  下载 {name} ...", end=" ")
         try:
-            # Use raw URL for actual file content, API content endpoint for listing
-            raw_url = item["download_url"]
-            data = make_request(raw_url, timeout=180)
+            data = make_request(item["download_url"], timeout=180)
             target_dir.mkdir(parents=True, exist_ok=True)
             (target_dir / name).write_bytes(data)
-            size = len(data)
-            print(f"OK ({size:,} bytes)")
+            print(f"OK ({len(data):,} bytes)")
             ok += 1
-        except Exception as e:
-            print(f"FAIL: {e}")
+        except Exception as exc:
+            print(f"FAIL: {exc}")
             fail += 1
 
     return ok, fail
@@ -115,7 +114,8 @@ def main() -> int:
         print(f"  小计: {ok} OK, {fail} FAIL")
         print()
 
-    print(f"总计: {total_ok} OK, {total_fail} FAIL → {package_root()}/知识库/")
+    print(f"总计: {total_ok} OK, {total_fail} FAIL -> {package_root()}/知识库/")
+    print("商业案例库已抽离到 $commercial-case-library，不在 ahskill 内重复下载。")
     return 1 if total_fail > 0 else 0
 
 

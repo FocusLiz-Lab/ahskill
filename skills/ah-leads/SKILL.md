@@ -18,6 +18,22 @@ AlexHormozi 知识库 | 百万美元报价
 
 Use `ima-skill/SKILL.md` and `ima-skill/knowledge-base/SKILL.md` for retrieval. Search terms usually include `100M Leads`, `lead magnet`, `core four`, `affiliate`, `warm outreach`, `cold outreach`, `paid ads`, `content`, `获客`, `潜在客户`.
 
+## Commercial Case Library Gate
+
+If the lead-generation task needs external acquisition examples, channel examples, lead magnet examples, growth case studies, ad/content funnel cases, 生财有术案例, or 商业案例库 evidence, first check the shared `$commercial-case-library` dependency:
+
+```text
+~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
+```
+
+If missing, pause and ask:
+
+```text
+这个获客任务需要商业案例库，但本地共享案例库还没有下载。是否现在下载？下载一次后 ahskill、dkskill、lhskill、openskill 都可以共用。
+```
+
+If the user agrees, route to `$commercial-case-library` and run its downloader, then continue. If the user declines, continue with Hormozi source material only and say no commercial-case retrieval was used.
+
 ## Core Framework
 
 Map the user's situation:

@@ -177,16 +177,26 @@ $ah-download-atoms
 python tools/download_full_atoms.py
 ```
 
-它会自动从 GitHub 下载并安装完整专家原子库和商业案例原子库到：
+它会自动从 GitHub 下载并安装完整专家原子库到：
 
 ```text
 知识库/原子库/atoms.jsonl
 知识库/原子库/atoms_*.jsonl
-知识库/商业案例库/atoms.jsonl
-知识库/商业案例库/atoms_*.jsonl
 ```
 
-如果需要手动下载，也可以在 GitHub Release 中下载 `ahs-local.zip`，它包含完整本地专家原子库和商业案例库。
+商业案例库已抽离为共享依赖，统一使用：
+
+```text
+$commercial-case-library
+```
+
+共享下载位置：
+
+```text
+~/.agents/shared/commercial-case-library/知识库/商业案例库/
+```
+
+这样 ahskill、dkskill、lhskill、openskill 等多个 skill 可以共用同一份商业案例库，避免重复下载。
 
 ## 知识库 / 原子库
 
@@ -196,10 +206,10 @@ python tools/download_full_atoms.py
 知识库/原子库/atoms.jsonl
 ```
 
-同时包含中文商业案例原子库：
+商业案例库不再内置在 ahskill 中。需要案例、项目拆解、对标案例、变现案例或生财有术案例时，先检查共享库：
 
 ```text
-知识库/商业案例库/atoms.jsonl
+~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
 ```
 
 它用于保存 Hormozi 风格 workflow 的方法论单元，不包含原书、视频文稿、社交媒体原文或付费材料。涉及具体原文、出处、案例细节时，仍应优先使用 IMA 知识库检索。

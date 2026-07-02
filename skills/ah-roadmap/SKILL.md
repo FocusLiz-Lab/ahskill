@@ -18,6 +18,22 @@ AlexHormozi 知识库 | 百万美元报价
 
 Use `ima-skill/SKILL.md` and `ima-skill/knowledge-base/SKILL.md` for retrieval. Do not expose internal IMA IDs.
 
+## Commercial Case Library Gate
+
+If the roadmap task needs external business cases, benchmark projects, case teardowns, monetization examples, 生财有术案例, or 商业案例库 evidence, first check the shared `$commercial-case-library` dependency:
+
+```text
+~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
+```
+
+If missing, pause and ask:
+
+```text
+这个路线图任务需要商业案例库，但本地共享案例库还没有下载。是否现在下载？下载一次后 ahskill、dkskill、lhskill、openskill 都可以共用。
+```
+
+If the user agrees, route to `$commercial-case-library` and run its downloader, then continue. If the user declines, continue with Hormozi source material only and say no commercial-case retrieval was used.
+
 ## Core Premise
 
 A Hormozi roadmap is a sequence:

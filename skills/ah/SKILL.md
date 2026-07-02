@@ -49,6 +49,24 @@ API Key 获取：https://ima.qq.com/agent-interface
 | Content, hooks, scripts, posts, launch assets | `$ah-content` | User wants content ideas, content map, short videos, titles, launch content, or educational posts. |
 | Explicit IMA search/read/cite/troubleshooting | `$ah-ima` | User specifically asks to search, read, cite IMA, or debug IMA retrieval. |
 
+## Commercial Case Library Gate
+
+If the user asks for external commercial cases, benchmark projects, case teardowns, monetization examples, offer/pricing examples, lead-generation examples, sales examples, 生财有术案例, or asks to "找案例/拆案例/参考案例/对标/商业案例库", use the shared `$commercial-case-library` dependency before answering.
+
+Check for:
+
+```text
+~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
+```
+
+If missing, ask:
+
+```text
+这个问题需要使用商业案例库，但本地共享案例库还没有下载。是否现在下载？下载一次后 ahskill、dkskill、lhskill、openskill 都可以共用。
+```
+
+Only after the user agrees, route to `$commercial-case-library` and run its downloader. If the user declines, continue with Hormozi IMA/source material only and state that no commercial-case retrieval was used.
+
 ## Clarify Once
 
 If the user is vague, ask one question:
