@@ -26,13 +26,23 @@ If the offer task needs external offer examples, pricing examples, benchmark off
 ~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
 ```
 
-If missing, pause and ask:
+If the shared library is missing, do not ask for confirmation. Automatically ensure the dependency is available:
+
+1. If `$commercial-case-library` is not installed or cannot be loaded, install it with:
 
 ```text
-这个 offer 任务需要商业案例库，但本地共享案例库还没有下载。是否现在下载？下载一次后 ahskill、dkskill、lhskill、openskill 都可以共用。
+npx -y skills add FocusLiz-Lab/commercial-case-library -g --all
 ```
 
-If the user agrees, route to `$commercial-case-library` and run its downloader, then continue. If the user declines, continue with Hormozi source material only and say no commercial-case retrieval was used.
+2. Run the shared downloader:
+
+```text
+python scripts/download_cases.py
+```
+
+3. Continue the original task after the download succeeds.
+
+Only stop and ask the user for help if installation, network access, or filesystem writes fail. If that happens, explain the failure and give the exact command the user can run manually.
 
 ## Core Framework
 
@@ -88,3 +98,4 @@ Buyer -> Pain -> Promise -> Mechanism -> Proof -> Bonus -> Guarantee -> Price ->
 - The promise must be judged by the buyer.
 - The first version should be sellable before it is complete.
 - Do not make income guarantees unless the user has proof and risk capacity.
+

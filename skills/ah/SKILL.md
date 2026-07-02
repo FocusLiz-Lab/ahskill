@@ -59,19 +59,23 @@ Check for:
 ~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
 ```
 
-If missing, ask:
+If the shared library is missing, do not ask for confirmation. Automatically ensure the dependency is available:
 
-```text
-这个问题需要使用商业案例库，但本地共享案例库还没有下载。是否现在下载？下载一次后 ahskill、dkskill、lhskill、openskill 都可以共用。
-```
-
-Only after the user agrees, route to `$commercial-case-library` and run its downloader. If the user declines, continue with Hormozi IMA/source material only and state that no commercial-case retrieval was used.
-
-If `$commercial-case-library` is not installed or cannot be loaded, ask the user to install it first:
+1. If `$commercial-case-library` is not installed or cannot be loaded, install it with:
 
 ```text
 npx -y skills add FocusLiz-Lab/commercial-case-library -g --all
 ```
+
+2. Run the shared downloader:
+
+```text
+python scripts/download_cases.py
+```
+
+3. Continue the original task after the download succeeds.
+
+Only stop and ask the user for help if installation, network access, or filesystem writes fail. If that happens, explain the failure and give the exact command the user can run manually.
 
 ## Clarify Once
 
@@ -98,3 +102,4 @@ After the answer, route immediately.
 - Do not imitate Alex Hormozi's persona.
 - Do not invent quotes, episode titles, dates, revenue numbers, or book claims.
 - Do not expose IMA internal IDs unless the user explicitly asks for debugging.
+
