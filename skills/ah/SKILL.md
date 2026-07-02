@@ -67,6 +67,12 @@ If missing, ask:
 
 Only after the user agrees, route to `$commercial-case-library` and run its downloader. If the user declines, continue with Hormozi IMA/source material only and state that no commercial-case retrieval was used.
 
+If `$commercial-case-library` is not installed or cannot be loaded, ask the user to install it first:
+
+```text
+npx -y skills add FocusLiz-Lab/commercial-case-library -g --all
+```
+
 ## Clarify Once
 
 If the user is vague, ask one question:
