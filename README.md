@@ -48,13 +48,13 @@ skills/
 
 ## IMA 配置
 
-整套 workflow skills 默认读取这个 IMA 知识库：
+普通 workflow 默认使用本地专家原子库和 Skill 知识包；只有用户主动要求 IMA 检索时，才使用这个 IMA 知识库：
 
 ```text
 AlexHormozi 知识库 | 百万美元报价
 ```
 
-用户不需要在每次提问时输入知识库名称。如果想使用其他 IMA 知识库，在问题里直接写知识库名称即可。
+普通问题不需要输入 IMA 知识库名称，也不会默认检索 IMA。只有当用户主动要求 IMA 检索、引用或排错时，才会使用 IMA；如果想使用其他 IMA 知识库，在问题里直接写知识库名称即可。
 
 ### 加入 / 访问知识库
 
@@ -212,7 +212,7 @@ $commercial-case-library
 ~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
 ```
 
-它用于保存 Hormozi 风格 workflow 的方法论单元，不包含原书、视频文稿、社交媒体原文或付费材料。涉及具体原文、出处、案例细节时，仍应优先使用 IMA 知识库检索。
+它用于保存 Hormozi 风格 workflow 的方法论单元，不包含原书、视频文稿、社交媒体原文或付费材料。涉及具体原文、出处、案例细节时，只有用户明确要求 IMA 检索/引用，才使用 IMA 知识库；否则使用本地专家原子库和方法包。
 
 ---
 
@@ -222,7 +222,7 @@ $commercial-case-library
 
 本仓库不包含 Alex Hormozi 的原书、PDF、付费材料、YouTube 转录稿、X/Twitter 归档、私有资料文件夹或任何受版权保护的原始资料库。
 
-这些 skills 会在运行时从用户自己的 IMA 知识库检索资料。用户需要自行确保有权上传和使用自己的资料。
+这些 skills 只有在用户主动要求 IMA 检索、引用或排错时，才会从用户自己的 IMA 知识库检索资料。用户需要自行确保有权上传和使用自己的资料。
 
 请不要提交：
 

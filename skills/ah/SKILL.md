@@ -1,26 +1,28 @@
 ---
 name: ah
 description: |
-  Alex Hormozi 商业增长 Skill 工具箱主入口。用于报价设计、获客系统、销售转化、定价、规模化、LTV、留存、商业路线图、内容选题、资料检索和 Hormozi 风格商业诊断。默认使用 IMA 知识库「AlexHormozi 知识库 | 百万美元报价」，并可在 IMA 不可用时读取本地原子库。触发词包括 $ah、/ah、Alex Hormozi、Hormozi、100M Offers、100M Leads、报价、获客、高客单价、定价、规模化、学习地图和商业诊断。
+  Alex Hormozi 商业增长 Skill 工具箱主入口。用于报价设计、获客系统、销售转化、定价、规模化、LTV、留存、商业路线图、内容选题、资料检索和 Hormozi 风格商业诊断。普通问题默认使用本地专家原子库和 Skill 知识包；只有用户主动调用 $ah-ima 或明确要求 IMA 检索/引用/排错时，才检索 IMA 知识库「AlexHormozi 知识库 | 百万美元报价」。触发词包括 $ah、/ah、Alex Hormozi、Hormozi、100M Offers、100M Leads、报价、获客、高客单价、定价、规模化、学习地图和商业诊断。
 ---
 
 # ah Alex Hormozi 商业增长工具箱
 
 这是 Alex Hormozi 商业增长工具箱的主入口。先判断用户当前的业务瓶颈，再路由到最合适的 workflow skill；如果上下文足够，直接在同一回答中完成对应工作流。
 
-## 默认 IMA 知识库
+## 资料源规则
 
-所有 workflow skills 默认读取：
+普通 Hormozi workflow 默认不检索 IMA。默认使用本地专家原子库和 `知识库/Skill知识包/` 方法说明作为依据。
+
+只有当用户主动调用 `$ah-ima`，或明确要求“检索 IMA / 引用 IMA / 排查 IMA / 从 IMA 找资料”时，才使用下面的 IMA 知识库：
 
 ```text
 AlexHormozi 知识库 | 百万美元报价
 ```
 
-用户不需要每次输入这个知识库名称。如果用户明确指定其他 IMA 知识库，则优先使用用户指定的知识库。
+普通请求应直接路由到合适的 workflow skill，不要因为存在 IMA 知识库就默认检索 IMA。
 
-## 必要依赖
+## IMA 可选依赖
 
-所有需要资料依据的 workflow 都使用 `ima-skill` 做检索：
+只有 `$ah-ima` 或用户明确要求 IMA 检索/引用/排错时，才使用 `ima-skill`：
 
 - `ima-skill/SKILL.md`
 - `ima-skill/knowledge-base/SKILL.md`
@@ -98,7 +100,7 @@ python scripts/download_cases.py
 ## 质量标准
 
 - 当专门 skill 更合适时，不要在路由器里试图解决所有问题。
-- 涉及 Hormozi 实质性观点时，默认使用 IMA 依据。
+- 涉及 Hormozi 实质性观点时，默认使用本地专家原子库或 Skill 知识包依据；只有显式 IMA 请求才用 IMA。
 - 不要模仿 Alex Hormozi 的人设。
 - 不要编造引用、节目标题、日期、收入数字或书中说法。
 - 除非用户明确要求排错，不要暴露 IMA 内部 ID。
@@ -107,14 +109,14 @@ python scripts/download_cases.py
 
 每个回答都必须以 Alex Hormozi 方法论作为主要推理层。对于 `/ah` 请求，先用 Alex Hormozi 资料或工作流原则建立诊断、框架和建议：
 
-1. 优先使用默认 IMA 知识库 `AlexHormozi 知识库 | 百万美元报价`。
-2. 如果 IMA 不可用、限流、权限受阻、命中弱/无命中，或需要本地兜底，使用本地 Alex Hormozi 专家原子库；缺失时自动补全。
+1. 默认优先使用本地 Alex Hormozi 专家原子库和 `知识库/Skill知识包/` 方法说明。
+2. 只有用户主动调用 `$ah-ima`，或明确要求 IMA 检索/引用/排错时，才使用 IMA 知识库 `AlexHormozi 知识库 | 百万美元报价`。
 3. 只有在 Alex Hormozi 方法论层建立之后，才在需要证明、对标、平台/渠道例子、变现例子、获客例子或中文市场语境时加入商业案例。
 4. 商业案例只能作为支撑证据。不要让商业案例替代 Alex Hormozi 方法论；除非完全没有 Alex Hormozi 来源，否则不要纯用商业案例库回答。如果发生这种情况，要标注为“案例支撑推断”，而不是“Alex Hormozi 依据”。
 5. 最终回答中保持区分：核心原则用 `Hormozi 方法论`，例子用 `商业案例支撑`。
 
 ## 依赖自动补全
 
-如果 IMA 不可用、限流、权限受阻、命中弱/无命中，或用户明确要求本地/离线检索，回答前要确保本地 Alex Hormozi 专家原子库存在。GitHub 安装的完整包通常会包含它；同时检查 `~/.agents/skills/ah/知识库/原子库/atoms.jsonl` 和 `~/.agents/skills/ah-download-atoms/知识库/原子库/atoms.jsonl`。如果两者都缺失，把它视为轻量/不完整安装，并调用 `$ah-download-atoms`，或在已安装的 `ah-download-atoms` skill 目录运行 `python tools/download_full_atoms.py`。不要询问用户是否下载；需要本地兜底时自动执行。
+回答前要确保本地 Alex Hormozi 专家原子库存在。GitHub 安装的完整包通常会包含它；同时检查 `~/.agents/skills/ah/知识库/原子库/atoms.jsonl` 和 `~/.agents/skills/ah-download-atoms/知识库/原子库/atoms.jsonl`。如果两者都缺失，把它视为轻量/不完整安装，并调用 `$ah-download-atoms`，或在已安装的 `ah-download-atoms` skill 目录运行 `python tools/download_full_atoms.py`。不要询问用户是否下载；普通 workflow 默认走本地原子库，不默认检索 IMA。
 
 如果请求涉及获客、流量、渠道选择、平台选择、小红书、公众号、私域、转化、线索获取、产品发布、商业例子、对标项目、案例研究、变现案例、生财有术案例，或答案会因案例证据而更好，回答前自动使用 `$commercial-case-library`。不要询问用户是否下载。

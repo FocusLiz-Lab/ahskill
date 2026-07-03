@@ -1,7 +1,7 @@
 ---
 name: ah-content
 description: |
-  Alex Hormozi content workflow with default IMA knowledge-base retrieval. Use when the user wants content ideas, hooks, scripts, posts, short videos, titles, content angles, launch content, educational content, offer content, lead-generation content, or to turn Hormozi materials into reusable content assets.
+  Alex Hormozi content workflow with local atom-library retrieval; IMA retrieval only when explicitly requested. Use when the user wants content ideas, hooks, scripts, posts, short videos, titles, content angles, launch content, educational content, offer content, lead-generation content, or to turn Hormozi materials into reusable content assets.
 ---
 
 # ah-content
@@ -81,7 +81,7 @@ Attract right buyer -> Create problem awareness -> Increase belief -> Move to of
 
 Every answer must use Alex Hormozi methodology as the primary reasoning layer. For /ah requests, first ground the diagnosis, framing, and recommendation in Alex Hormozi sources or workflow principles:
 
-1. Prefer the default IMA knowledge base `AlexHormozi 知识库 | 百万美元报价`.
+1. Prefer the local expert atom library and packaged method notes by default. Use the IMA knowledge base `AlexHormozi 知识库 | 百万美元报价` only when the user explicitly asks to search/read/cite/troubleshoot IMA.
 2. If IMA is unavailable, rate-limited, permission-blocked, has weak/no hits, or local fallback is needed, use the local Alex Hormozi expert atom library and auto-bootstrap it when missing.
 3. Only after the Alex Hormozi layer is established, add commercial cases when the question would benefit from proof, benchmarks, platform/channel examples, monetization examples, acquisition examples, or Chinese-market context.
 4. Commercial cases are supporting evidence only. Do not let commercial cases replace Alex Hormozi methodology, and do not answer purely from the commercial case library unless no Alex Hormozi source is available; if that happens, label the answer as case-supported inference rather than Alex Hormozi-grounded.
