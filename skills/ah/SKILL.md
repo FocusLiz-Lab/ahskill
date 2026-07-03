@@ -37,83 +37,84 @@ API Key 获取：https://ima.qq.com/agent-interface
 
 ## 路由表
 
-| User intent | Route to | Use when |
+| 用户意图 | 路由到 | 适用场景 |
 |---|---|---|
-| Learning path, reading order, where to start | `$ah-learning-map` | User asks how to study Hormozi, what to read first, or how to navigate the knowledge base. |
-| Business path, 30/60/90-day roadmap, next steps | `$ah-roadmap` | User needs a plan connecting market, offer, leads, sales, delivery, retention, and scale. |
-| Offer, package, guarantee, bonus, naming, validation | `$ah-offer` | User wants a stronger offer, productized service, knowledge product, course, template, or consulting package. |
-| Leads, traffic, lead magnet, acquisition channel | `$ah-leads` | User has weak traffic, low inquiry volume, poor lead quality, or wants a lead-generation plan. |
-| Sales, DMs, objections, closing, follow-up | `$ah-sales` | User gets leads but cannot convert them, needs scripts, objection handling, or qualification. |
-| Pricing, price raise, profit, margin, tiers | `$ah-pricing` | User asks how to price, increase price, improve profit, or design a money model. |
-| Scale, systems, hiring, retention, LTV, operations | `$ah-scale` | User has sales but delivery, retention, repeatability, or team/system bottlenecks. |
-| Content, hooks, scripts, posts, launch assets | `$ah-content` | User wants content ideas, content map, short videos, titles, launch content, or educational posts. |
-| Explicit IMA search/read/cite/troubleshooting | `$ah-ima` | User specifically asks to search, read, cite IMA, or debug IMA retrieval. |
+| 学习路径、阅读顺序、从哪里开始 | `$ah-learning-map` | 用户想学习 Hormozi、想知道先看什么，或想了解如何使用知识库。 |
+| 商业路径、30/60/90 天路线图、下一步 | `$ah-roadmap` | 用户需要把市场、offer、获客、销售、交付、留存和规模化串起来的行动计划。 |
+| offer、包装、保证、赠品、命名、验证 | `$ah-offer` | 用户想设计更强的 offer、产品化服务、知识产品、课程、模板或咨询方案。 |
+| 线索、流量、引流钩子、获客渠道 | `$ah-leads` | 用户线索少、咨询少、线索质量差，或想做获客方案。 |
+| 销售、私信、异议处理、成交、跟进 | `$ah-sales` | 用户有线索但转化不了，需要话术、异议处理、成交或筛选客户。 |
+| 定价、提价、利润、毛利、套餐层级 | `$ah-pricing` | 用户想定价、提价、提高利润，或设计赚钱模型。 |
+| 规模化、系统、招聘、留存、LTV、运营 | `$ah-scale` | 用户已有销售，但交付、留存、可复制性、团队或系统出现瓶颈。 |
+| 内容、钩子、脚本、帖子、发布素材 | `$ah-content` | 用户想做内容选题、内容地图、短视频、标题、发布内容或教育型帖子。 |
+| 明确要求 IMA 检索/阅读/引用/排错 | `$ah-ima` | 用户明确要求搜索、读取、引用 IMA，或排查 IMA 检索问题。 |
 
-## Commercial Case Library Gate
+## 商业案例库触发规则
 
-If the user asks for external commercial cases, benchmark projects, case teardowns, monetization examples, offer/pricing examples, lead-generation examples, sales examples, 生财有术案例, or asks to "找案例/拆案例/参考案例/对标/商业案例库", use the shared `$commercial-case-library` dependency before answering. Do not ask the user whether to download it; install/check it automatically.
+如果用户要求外部商业案例、对标项目、案例拆解、变现例子、offer/定价例子、获客例子、销售例子、生财有术案例，或明确说“找案例/拆案例/参考案例/对标/商业案例库”，回答前使用共享 `$commercial-case-library` 依赖。不要询问用户是否下载，直接自动安装/检查。
 
-Check for:
+检查这个文件：
 
 ```text
 ~/.agents/shared/commercial-case-library/知识库/商业案例库/commercial_cases_manifest.json
 ```
 
-If the shared library is missing, do not ask for confirmation. Automatically ensure the dependency is available:
+如果共享库缺失，不要询问确认，直接确保依赖可用：
 
-1. If `$commercial-case-library` is not installed or cannot be loaded, install it immediately without asking the user:
+1. 如果 `$commercial-case-library` 未安装或无法加载，立即安装：
 
 ```text
 npx -y skills add FocusLiz-Lab/commercial-case-library -g --all
 ```
 
-2. Run the shared downloader:
+2. 运行共享下载脚本：
 
 ```text
 python scripts/download_cases.py
 ```
 
-3. Continue the original task after the download succeeds.
+3. 下载成功后继续处理原始任务。
 
-Only stop and ask the user for help if installation, network access, or filesystem writes fail. If that happens, explain the failure and give the exact command the user can run manually.
+只有安装、网络访问或文件写入失败时才停止，并说明失败原因和用户可手动运行的准确命令。
 
-## Clarify Once
+## 只澄清一次
 
-If the user is vague, ask one question:
+如果用户的问题很模糊，只问一个问题：
 
 ```text
 你现在最想处理哪一块：学习地图、商业路线图、报价/offer、获客/leads、销售成交、定价利润、规模化运营、内容，还是从 IMA 资料里找原文？
 ```
 
-After the answer, route immediately.
+收到回答后立即路由。
 
-## Handoff Format
+## 交接格式
 
 ```text
 这个问题交给 $skill-name。
-原因：{one sentence}
-需要输入：{what the user should provide next, if anything}
+原因：{一句话说明}
+需要输入：{如果需要，说明用户下一步需要提供什么}
 ```
 
-## Quality Bar
+## 质量标准
 
-- Do not solve everything inside the router when a specialist skill is a better fit.
-- Default to IMA-grounded workflow skills for substantive Hormozi claims.
-- Do not imitate Alex Hormozi's persona.
-- Do not invent quotes, episode titles, dates, revenue numbers, or book claims.
-- Do not expose IMA internal IDs unless the user explicitly asks for debugging.
-## Hormozi Methodology First
+- 当专门 skill 更合适时，不要在路由器里试图解决所有问题。
+- 涉及 Hormozi 实质性观点时，默认使用 IMA 依据。
+- 不要模仿 Alex Hormozi 的人设。
+- 不要编造引用、节目标题、日期、收入数字或书中说法。
+- 除非用户明确要求排错，不要暴露 IMA 内部 ID。
 
-Every answer must use Alex Hormozi methodology as the primary reasoning layer. For /ah requests, first ground the diagnosis, framing, and recommendation in Alex Hormozi sources or workflow principles:
+## Hormozi 方法论优先
 
-1. Prefer the default IMA knowledge base `AlexHormozi 知识库 | 百万美元报价`.
-2. If IMA is unavailable, rate-limited, permission-blocked, has weak/no hits, or local fallback is needed, use the local Alex Hormozi expert atom library and auto-bootstrap it when missing.
-3. Only after the Alex Hormozi layer is established, add commercial cases when the question would benefit from proof, benchmarks, platform/channel examples, monetization examples, acquisition examples, or Chinese-market context.
-4. Commercial cases are supporting evidence only. Do not let commercial cases replace Alex Hormozi methodology, and do not answer purely from the commercial case library unless no Alex Hormozi source is available; if that happens, label the answer as case-supported inference rather than Alex Hormozi-grounded.
-5. In final answers, keep the distinction clear: Hormozi 方法论 for the core principle and 商业案例支撑 for examples.
+每个回答都必须以 Alex Hormozi 方法论作为主要推理层。对于 `/ah` 请求，先用 Alex Hormozi 资料或工作流原则建立诊断、框架和建议：
 
-## Dependency Auto-Bootstrap
+1. 优先使用默认 IMA 知识库 `AlexHormozi 知识库 | 百万美元报价`。
+2. 如果 IMA 不可用、限流、权限受阻、命中弱/无命中，或需要本地兜底，使用本地 Alex Hormozi 专家原子库；缺失时自动补全。
+3. 只有在 Alex Hormozi 方法论层建立之后，才在需要证明、对标、平台/渠道例子、变现例子、获客例子或中文市场语境时加入商业案例。
+4. 商业案例只能作为支撑证据。不要让商业案例替代 Alex Hormozi 方法论；除非完全没有 Alex Hormozi 来源，否则不要纯用商业案例库回答。如果发生这种情况，要标注为“案例支撑推断”，而不是“Alex Hormozi 依据”。
+5. 最终回答中保持区分：核心原则用 `Hormozi 方法论`，例子用 `商业案例支撑`。
 
-If IMA is unavailable, rate-limited, permission-blocked, has weak/no hits, or the user explicitly wants local/offline retrieval, ensure the local Alex Hormozi expert atom library exists before answering. GitHub installs should include it when bundled; also check ~/.agents/skills/ah/知识库/原子库/atoms.jsonl and ~/.agents/skills/ah-download-atoms/知识库/原子库/atoms.jsonl. If both are missing, treat this as a light/partial install and call $ah-download-atoms or run python tools/download_full_atoms.py from the installed ah-download-atoms skill directory. Do not ask the user whether to download; do it automatically when local fallback is required.
+## 依赖自动补全
 
-If the request involves acquisition, traffic, channel choice, platform choice, Xiaohongshu/小红书, WeChat Official Account/公众号, private domain/私域, conversion, lead generation, product launch, business examples, benchmark projects, case studies, monetization examples, 生财有术案例, or any answer would benefit from case evidence, use $commercial-case-library automatically before answering. Do not ask the user whether to download it.
+如果 IMA 不可用、限流、权限受阻、命中弱/无命中，或用户明确要求本地/离线检索，回答前要确保本地 Alex Hormozi 专家原子库存在。GitHub 安装的完整包通常会包含它；同时检查 `~/.agents/skills/ah/知识库/原子库/atoms.jsonl` 和 `~/.agents/skills/ah-download-atoms/知识库/原子库/atoms.jsonl`。如果两者都缺失，把它视为轻量/不完整安装，并调用 `$ah-download-atoms`，或在已安装的 `ah-download-atoms` skill 目录运行 `python tools/download_full_atoms.py`。不要询问用户是否下载；需要本地兜底时自动执行。
+
+如果请求涉及获客、流量、渠道选择、平台选择、小红书、公众号、私域、转化、线索获取、产品发布、商业例子、对标项目、案例研究、变现案例、生财有术案例，或答案会因案例证据而更好，回答前自动使用 `$commercial-case-library`。不要询问用户是否下载。
