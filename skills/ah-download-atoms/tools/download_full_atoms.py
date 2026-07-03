@@ -1,61 +1,66 @@
 #!/usr/bin/env python3
-"""Download the full expert atom library for ahskill from GitHub."""
+"""Download and install the full Alex Hormozi atom library from GitHub Releases."""
 
 from __future__ import annotations
 
-import json
 import sys
-import urllib.parse
+import tempfile
 import urllib.request
+import zipfile
 from pathlib import Path
 
 REPO = "FocusLiz-Lab/ahskill"
-DOWNLOAD_DIRS = ("知识库/原子库",)
+ASSET_NAME = "ahs-local.zip"
+INSTALL_PREFIXES = ("知识库/原子库/",)
 
 
 def package_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
 
-def fetch_json(url: str):
-    with urllib.request.urlopen(url, timeout=60) as response:
-        return json.loads(response.read().decode("utf-8"))
+def asset_url() -> str:
+    return f"https://github.com/{REPO}/releases/latest/download/{ASSET_NAME}"
 
 
-def download(url: str, target: Path) -> None:
-    target.parent.mkdir(parents=True, exist_ok=True)
-    with urllib.request.urlopen(url, timeout=300) as response:
+def download_asset(target: Path) -> None:
+    with urllib.request.urlopen(asset_url(), timeout=300) as response:
         target.write_bytes(response.read())
 
 
-def download_dir(remote_dir: str) -> int:
-    encoded_dir = urllib.parse.quote(remote_dir)
-    api_url = f"https://api.github.com/repos/{REPO}/contents/{encoded_dir}?ref=main"
-    files = [item for item in fetch_json(api_url) if item.get("type") == "file"]
-    if not files:
-        print(f"未在 GitHub 仓库中找到 {remote_dir} 文件。", file=sys.stderr)
-        return 0
+def normalize_member(name: str) -> str:
+    normalized = name.replace("\\", "/")
+    return normalized.split("/", 1)[1] if normalized.startswith("ah/") else normalized
 
-    target_dir = package_root() / remote_dir
+
+def install_from_zip(zip_path: Path, root: Path) -> int:
     count = 0
-    for item in files:
-        name = item["name"]
-        if not (name.endswith(".jsonl") or name.endswith(".json") or name.endswith(".md")):
-            continue
-        print(f"下载 {remote_dir}/{name} ...")
-        download(item["download_url"], target_dir / name)
-        count += 1
+    with zipfile.ZipFile(zip_path) as archive:
+        for member in archive.infolist():
+            relative = normalize_member(member.filename)
+            if member.is_dir() or not relative.startswith(INSTALL_PREFIXES):
+                continue
+            target = root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(archive.read(member))
+            count += 1
     return count
 
 
 def main() -> int:
-    count = 0
-    for remote_dir in DOWNLOAD_DIRS:
-        count += download_dir(remote_dir)
+    root = package_root()
+    with tempfile.TemporaryDirectory() as tmp:
+        zip_path = Path(tmp) / ASSET_NAME
+        print(f"下载 {ASSET_NAME} ...")
+        download_asset(zip_path)
+        print("解压安装 Alex Hormozi 专家原子库 ...")
+        count = install_from_zip(zip_path, root)
+
     if count == 0:
-        print("未下载到任何专家原子库文件。", file=sys.stderr)
+        print("未解压到任何原子库文件，请检查 Release 包结构。", file=sys.stderr)
         return 1
-    print(f"完成：已下载 {count} 个文件到 {package_root() / '知识库'}")
+
+    print(f"完成：已安装 {count} 个专家原子库文件到 {root / '知识库'}")
+    print("商业案例库已抽离到 $commercial-case-library，不在 ahskill 内重复下载。")
     return 0
 
 

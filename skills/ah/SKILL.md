@@ -51,7 +51,7 @@ API Key 获取：https://ima.qq.com/agent-interface
 
 ## Commercial Case Library Gate
 
-If the user asks for external commercial cases, benchmark projects, case teardowns, monetization examples, offer/pricing examples, lead-generation examples, sales examples, 生财有术案例, or asks to "找案例/拆案例/参考案例/对标/商业案例库", use the shared `$commercial-case-library` dependency before answering.
+If the user asks for external commercial cases, benchmark projects, case teardowns, monetization examples, offer/pricing examples, lead-generation examples, sales examples, 生财有术案例, or asks to "找案例/拆案例/参考案例/对标/商业案例库", use the shared `$commercial-case-library` dependency before answering. Do not ask the user whether to download it; install/check it automatically.
 
 Check for:
 
@@ -61,7 +61,7 @@ Check for:
 
 If the shared library is missing, do not ask for confirmation. Automatically ensure the dependency is available:
 
-1. If `$commercial-case-library` is not installed or cannot be loaded, install it with:
+1. If `$commercial-case-library` is not installed or cannot be loaded, install it immediately without asking the user:
 
 ```text
 npx -y skills add FocusLiz-Lab/commercial-case-library -g --all
@@ -102,4 +102,18 @@ After the answer, route immediately.
 - Do not imitate Alex Hormozi's persona.
 - Do not invent quotes, episode titles, dates, revenue numbers, or book claims.
 - Do not expose IMA internal IDs unless the user explicitly asks for debugging.
+## Hormozi Methodology First
 
+Every answer must use Alex Hormozi methodology as the primary reasoning layer. For /ah requests, first ground the diagnosis, framing, and recommendation in Alex Hormozi sources or workflow principles:
+
+1. Prefer the default IMA knowledge base `AlexHormozi 知识库 | 百万美元报价`.
+2. If IMA is unavailable, rate-limited, permission-blocked, has weak/no hits, or local fallback is needed, use the local Alex Hormozi expert atom library and auto-bootstrap it when missing.
+3. Only after the Alex Hormozi layer is established, add commercial cases when the question would benefit from proof, benchmarks, platform/channel examples, monetization examples, acquisition examples, or Chinese-market context.
+4. Commercial cases are supporting evidence only. Do not let commercial cases replace Alex Hormozi methodology, and do not answer purely from the commercial case library unless no Alex Hormozi source is available; if that happens, label the answer as case-supported inference rather than Alex Hormozi-grounded.
+5. In final answers, keep the distinction clear: Hormozi 方法论 for the core principle and 商业案例支撑 for examples.
+
+## Dependency Auto-Bootstrap
+
+If IMA is unavailable, rate-limited, permission-blocked, has weak/no hits, or the user explicitly wants local/offline retrieval, ensure the local Alex Hormozi expert atom library exists before answering. GitHub installs should include it when bundled; also check ~/.agents/skills/ah/知识库/原子库/atoms.jsonl and ~/.agents/skills/ah-download-atoms/知识库/原子库/atoms.jsonl. If both are missing, treat this as a light/partial install and call $ah-download-atoms or run python tools/download_full_atoms.py from the installed ah-download-atoms skill directory. Do not ask the user whether to download; do it automatically when local fallback is required.
+
+If the request involves acquisition, traffic, channel choice, platform choice, Xiaohongshu/小红书, WeChat Official Account/公众号, private domain/私域, conversion, lead generation, product launch, business examples, benchmark projects, case studies, monetization examples, 生财有术案例, or any answer would benefit from case evidence, use $commercial-case-library automatically before answering. Do not ask the user whether to download it.
