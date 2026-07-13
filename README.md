@@ -1,5 +1,5 @@
 # ahskill
-
+## 使用上有什么不清楚的地方或者需要购买知识库都可以微信联系：LOOVI-STUDIO
 Alex Hormozi 风格商业工作流 Skill 工具箱。
 
 `ahskill` 是一组面向 Agent 的 workflow skills，用来基于 IMA 知识库学习 Alex Hormozi 风格资料、设计 offer、搭建获客系统、提升销售转化、设计定价、拆解规模化运营，并生成内容资产。
