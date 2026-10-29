@@ -4,6 +4,17 @@ description: |
   Alex Hormozi 商业增长 Skill 工具箱主入口。用于报价设计、获客系统、销售转化、定价、规模化、LTV、留存、商业路线图、内容选题、资料检索和 Hormozi 风格商业诊断。普通问题默认使用本地专家原子库和 Skill 知识包；只有用户主动调用 $ah-ima 或明确要求 IMA 检索/引用/排错时，才检索 IMA 知识库「AlexHormozi 知识库 | 百万美元报价」。触发词包括 $ah、/ah、Alex Hormozi、Hormozi、100M Offers、100M Leads、报价、获客、高客单价、定价、规模化、学习地图和商业诊断。
 ---
 
+## 手动更新路由
+
+用户明确要求“更新 skill / 检查更新 / 同步最新原子库”时，先执行此路由。使用当前 SKILL.md 所在目录解析脚本绝对路径：
+
+```text
+python "{skillDir}/tools/update_skill.py"
+```
+
+只检查时加 `--check`。脚本从 GitHub main 的固定提交同步本仓库整套 skill 和原子资料，覆盖前备份，写入失败回滚；不需要 Git 或 GitHub 登录。根据脚本实际结果报告当前提交、更新状态与失败原因。普通业务问题不自动更新。更新后重新读取相关 SKILL.md。
+
+
 # ah Alex Hormozi 商业增长工具箱
 
 这是 Alex Hormozi 商业增长工具箱的主入口。先判断用户当前的业务瓶颈，再路由到最合适的 workflow skill；如果上下文足够，直接在同一回答中完成对应工作流。
