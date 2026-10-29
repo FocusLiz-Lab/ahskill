@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alex Hormozi 更新"
+  short_description: "Update suite skills and atom libraries safely"
+  default_prompt: "Use $ah-update to update the suite and its atom libraries from GitHub."
